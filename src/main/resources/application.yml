@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: "jdbc:h2:mem:demo;MODE=MySQL;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS demo;"
+    username: sa
+    password:
+  jpa:
+    database-platform: "org.hibernate.dialect.H2Dialect"
+    open-in-view: false
+    properties:
+      hibernate.default_schema: demo
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
