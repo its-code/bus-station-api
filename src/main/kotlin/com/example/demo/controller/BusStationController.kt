@@ -51,4 +51,14 @@ class BusStationController(private val busStationService: BusStationService) {
         return ResponseEntity.ok(busStations)
     }
 
+    @GetMapping("/by-location")
+    fun getByLocation(
+        @RequestParam("latitude") latitude: Double,
+        @RequestParam("longitude") longitude: Double,
+        @RequestParam("radius") radius: Double
+    ): ResponseEntity<List<BusStation>> {
+        val busStations = busStationService.findWithinRadius(latitude, longitude, radius)
+        return ResponseEntity.ok(busStations)
+    }
+
 }
