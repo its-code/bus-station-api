@@ -28,14 +28,11 @@ class BusStationController(private val busStationService: BusStationService) {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedBusStation)
     }
 
-    @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody busStation: BusStation): ResponseEntity<BusStation> {
-        if (busStationService.findById(id) == null) {
-            return ResponseEntity.notFound().build()
-        }
-        val updatedBusStation = busStation.copy(id = id)
-        val savedBusStation = busStationService.save(updatedBusStation)
-        return ResponseEntity.ok(savedBusStation)
+    @PatchMapping("/{id}")
+    fun update(@PathVariable id: Long, @RequestBody busStationUpdates: Map<String, Any>): ResponseEntity<BusStation> {
+        val existingBusStation = busStationService.findById(id) ?: return ResponseEntity.notFound().build()
+        val updatedBusStation = busStationService.update(existingBusStation, busStationUpdates)
+        return ResponseEntity.ok(updatedBusStation)
     }
 
     @DeleteMapping("/{id}")

@@ -45,6 +45,23 @@ class BusStationService(private val busStationRepository: BusStationRepository) 
      */
     fun findByCountryCode(countryCode: String): List<BusStation> = busStationRepository.findByCountryCode(countryCode)
 
+    /**
+     * Updates an existing BusStation object with the provided changes.
+     *
+     * @param busStation The BusStation object to be updated.
+     * @param updates A map containing the updated properties and their new values.
+     * @return The updated BusStation object after saving.
+     */
+    fun update(busStation: BusStation, updates: Map<String, Any>): BusStation {
+        val updatedBusStation = busStation.copy(
+            name = updates["name"] as? String ?: busStation.name,
+            latitude = updates["latitude"] as? Double ?: busStation.latitude,
+            longitude = updates["longitude"] as? Double ?: busStation.longitude,
+            countryCode = updates["countryCode"] as? String ?: busStation.countryCode
+        )
+        return save(updatedBusStation)
+    }
+
 
     /**
      * Returns a list of BusStations within the specified radius (in Km) of the given latitude and longitude.
